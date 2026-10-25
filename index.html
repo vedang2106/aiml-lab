@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI & ML Lab Experiments 1–10</title>
+<style>
+:root{--bg:#0b1020;--panel:#121a2d;--panel2:#18233b;--text:#e8eefc;--muted:#aab7d3;--accent:#78a9ff;--border:#2b3854}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
+header{padding:24px 28px;background:linear-gradient(120deg,#17284a,#10172a);border-bottom:1px solid var(--border)}
+header h1{margin:0 0 8px;font-size:clamp(22px,3vw,32px)}header p{margin:0;color:var(--muted)}
+.layout{display:grid;grid-template-columns:270px minmax(0,1fr) 270px;min-height:calc(100vh - 105px)}
+nav{padding:18px;border-right:1px solid var(--border);background:#0e1527}
+nav h2{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 12px}
+.exp-link{display:block;width:100%;text-align:left;padding:12px;margin:6px 0;border:1px solid transparent;border-radius:10px;background:transparent;color:var(--text);cursor:pointer;font-size:14px}
+.exp-link:hover{background:var(--panel2)}.exp-link.active{background:#1b3155;border-color:#42649a;color:#fff}
+.exp-link small{display:block;color:var(--muted);margin-top:4px;line-height:1.35}
+main{padding:26px;min-width:0}aside{padding:20px;background:#0e1527;border-left:1px solid var(--border);min-width:0}aside h2{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 12px}aside p,aside li{font-size:13px;line-height:1.55;color:#c9d5ec}aside ul{padding-left:18px}aside pre{font-size:12px;padding:10px;white-space:pre-wrap;overflow-wrap:anywhere}aside .section{border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:12px;background:var(--panel)}.side-title{font-weight:650;margin-bottom:6px}main .colab-note{background:#142c2a;border-color:#28534d;color:#c7f4e8}{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+button.action{border:1px solid var(--border);background:var(--panel2);color:var(--text);padding:9px 13px;border-radius:8px;cursor:pointer}
+button.action:hover{border-color:var(--accent)}.tag{font-size:12px;color:#c7d8ff;background:#1c2b47;border:1px solid #30486f;border-radius:999px;padding:5px 9px}
+h2{margin:0 0 8px;font-size:25px}.desc{color:var(--muted);line-height:1.6;margin:0 0 18px}
+.note{background:#171f33;border:1px solid var(--border);padding:12px 14px;border-radius:10px;color:#c9d5ec;margin:0 0 16px;font-size:14px}
+pre{margin:0;background:#070b14;border:1px solid #27324a;border-radius:12px;padding:18px;overflow:auto;line-height:1.55;font-size:13px;white-space:pre}
+code{font-family:Consolas,Monaco,'Courier New',monospace}
+footer{color:var(--muted);font-size:12px;margin-top:18px}
+@media(max-width:1050px){.layout{grid-template-columns:240px minmax(0,1fr)}aside{grid-column:1 / -1;border-left:0;border-top:1px solid var(--border)}}@media(max-width:760px){.layout{grid-template-columns:1fr}nav{border-right:0;border-bottom:1px solid var(--border)}.navlist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}main{padding:18px}aside{grid-column:auto}}
+</style>
+</head>
+<body>
+<header><h1>AI &amp; ML Lab — Experiments 1 to 10</h1><p>Click an experiment on the left to open its code. Use “Copy code” to paste it into your Python editor.</p></header>
+<div class="layout">
+<nav><h2>Experiments</h2><div class="navlist" id="navlist"></div></nav>
+<main>
+<div class="toolbar"><span class="tag" id="language">Python</span><button class="action" id="copy">Copy code</button><button class="action" id="download">Download .py</button></div>
+<h2 id="title"></h2><p class="desc" id="desc"></p><div class="note" id="note"></div><pre><code id="code"></code></pre>
+<div class="note colab-note"><strong>Google Colab:</strong> Yes, these experiment codes should run in Colab too. Open <a href="https://colab.research.google.com/" target="_blank" rel="noopener" style="color:#9de5d7">Google Colab</a>, create a notebook, and paste the selected code into a code cell. NumPy, pandas, Matplotlib and scikit-learn are usually preinstalled. If a package is missing, run <code>!pip install numpy pandas matplotlib scikit-learn</code> in a separate cell first.</div>
+<footer>All 10 experiment programs are written for standard Python and are intended to run both locally (Windows/macOS/Linux) and in Google Colab. Experiments 2 and 3 use Python built-ins and need no extra libraries. For plotting experiments, use a normal Python environment with Matplotlib installed; in Colab, plots display beneath the cell.</footer>
+</main>
+<aside><div class="section"><h2>Libraries for this experiment</h2><div id="current-libraries"></div></div><div class="section"><div class="side-title">Run on your PC</div><p>Install the common libraries in Command Prompt / PowerShell / terminal:</p><pre><code id="install-command">python -m pip install numpy pandas matplotlib scikit-learn</code></pre><button class="action" id="copy-install">Copy PC install command</button><p>If <code>python</code> is not recognized on Windows, try <code>py -m pip install numpy pandas matplotlib scikit-learn</code>.</p><p>Package names: <strong>NumPy</strong> (import as <code>numpy</code>), <strong>pandas</strong>, <strong>Matplotlib</strong>, <strong>scikit-learn</strong> (import as <code>sklearn</code>).</p></div><div class="section"><div class="side-title">Run in Google Colab</div><ul><li>Open <a href="https://colab.research.google.com/" target="_blank" rel="noopener" style="color:#9de5d7">Google Colab</a> and create a notebook.</li><li>Paste the same experiment code into a code cell.</li><li>Press Shift + Enter.</li><li>Plots appear below the cell.</li></ul><p>Usually libraries are already installed. If imports fail, run this in a separate cell:</p><pre><code>!pip install numpy pandas matplotlib scikit-learn</code></pre><p><strong>Same code:</strong> Use the exact same Python code on your PC and in Colab. Only the library installation steps differ.</p></div></aside>
+</div>
+<script>
+const experiments = [
+{title:"Python & ML Environment Setup",short:"Python and library setup",desc:"Check Python and verify that the main machine-learning libraries import correctly.",note:"Run this first. Install missing packages with: python -m pip install numpy pandas matplotlib scikit-learn",code:`import sys
+print("Python version:", sys.version)
+
+packages = ["numpy", "pandas", "matplotlib", "sklearn"]
+for package in packages:
+    try:
+        module = __import__(package)
+        print(f"{package}: installed")
+    except ImportError:
+        print(f"{package}: NOT installed")
+
+# Optional: show package versions
+import numpy as np
+import pandas as pd
+import matplotlib
+import sklearn
+
+print("NumPy:", np.__version__)
+print("Pandas:", pd.__version__)
+print("Matplotlib:", matplotlib.__version__)
+print("Scikit-learn:", sklearn.__version__)`},
+{title:"Breadth-First Search (BFS) & Depth-First Search (DFS)",short:"Graph traversal algorithms",desc:"Traverse a graph from a starting node using BFS (queue) and DFS (stack/recursion).",note:"This is a graph-search implementation and does not require external packages.",code:`from collections import deque
+
+graph = {
+    "A": ["B", "C"],
+    "B": ["D", "E"],
+    "C": ["F"],
+    "D": [],
+    "E": ["F"],
+    "F": []
+}
+
+def bfs(graph, start):
+    visited = set([start])
+    queue = deque([start])
+    order = []
+    while queue:
+        node = queue.popleft()
+        order.append(node)
+        for neighbour in graph[node]:
+            if neighbour not in visited:
+                visited.add(neighbour)
+                queue.append(neighbour)
+    return order
+
+def dfs(graph, start):
+    visited = set()
+    order = []
+    def visit(node):
+        visited.add(node)
+        order.append(node)
+        for neighbour in graph[node]:
+            if neighbour not in visited:
+                visit(neighbour)
+    visit(start)
+    return order
+
+print("BFS:", bfs(graph, "A"))
+print("DFS:", dfs(graph, "A"))`},
+{title:"A* Algorithm with Heuristic Function",short:"A* pathfinding",desc:"Find a low-cost path through a weighted graph using f(n) = g(n) + h(n).",note:"The heuristic values should estimate the remaining cost to the goal. For guaranteed optimality, use an admissible heuristic.",code:`import heapq
+
+# Weighted graph: neighbour -> travel cost
+graph = {
+    "A": {"B": 1, "C": 4},
+    "B": {"D": 2, "E": 5},
+    "C": {"E": 1},
+    "D": {"G": 5},
+    "E": {"G": 2},
+    "G": {}
+}
+heuristic = {"A": 5, "B": 4, "C": 3, "D": 4, "E": 1, "G": 0}
+
+def a_star(start, goal):
+    # Entries are (estimated total cost, current cost, node, path)
+    open_heap = [(heuristic[start], 0, start, [start])]
+    best_cost = {start: 0}
+    while open_heap:
+        f, g, node, path = heapq.heappop(open_heap)
+        if node == goal:
+            return path, g
+        if g != best_cost.get(node):
+            continue
+        for neighbour, cost in graph[node].items():
+            new_g = g + cost
+            if new_g < best_cost.get(neighbour, float("inf")):
+                best_cost[neighbour] = new_g
+                new_f = new_g + heuristic[neighbour]
+                heapq.heappush(open_heap, (new_f, new_g, neighbour, path + [neighbour]))
+    return None, float("inf")
+
+path, cost = a_star("A", "G")
+print("Path:", path)
+print("Total cost:", cost)`},
+{title:"Simple & Multiple Linear Regression",short:"Regression models",desc:"Fit a simple linear regression model and a multiple linear regression model, then evaluate them with MAE and R².",note:"The example uses a small sample dataset so it runs without downloading any files.",code:`import numpy as np
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_absolute_error, r2_score
+
+# Simple linear regression: one input feature
+X_simple = np.array([[1], [2], [3], [4], [5], [6]])
+y = np.array([35, 40, 50, 55, 65, 70])
+
+simple_model = LinearRegression()
+simple_model.fit(X_simple, y)
+simple_pred = simple_model.predict(X_simple)
+
+print("SIMPLE LINEAR REGRESSION")
+print("Slope:", simple_model.coef_[0])
+print("Intercept:", simple_model.intercept_)
+print("Prediction for x=7:", simple_model.predict([[7]])[0])
+print("MAE:", mean_absolute_error(y, simple_pred))
+print("R2:", r2_score(y, simple_pred))
+
+# Multiple linear regression: two input features
+X_multi = np.array([
+    [1, 2], [2, 1], [3, 2], [4, 3], [5, 4], [6, 3]
+])
+y_multi = np.array([30, 35, 45, 55, 65, 70])
+
+multi_model = LinearRegression()
+multi_model.fit(X_multi, y_multi)
+print("\\nMULTIPLE LINEAR REGRESSION")
+print("Coefficients:", multi_model.coef_)
+print("Intercept:", multi_model.intercept_)
+print("Prediction for [study_hours, practice_tests]=[4, 2]:",
+      multi_model.predict([[4, 2]])[0])`},
+{title:"Binary Classification & Confusion Matrix",short:"Binary classifier evaluation",desc:"Train a logistic regression classifier and display its confusion matrix and common classification metrics.",note:"The Iris dataset is filtered to two classes to make this a binary classification problem.",code:`from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import make_pipeline
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import confusion_matrix, classification_report, accuracy_score
+
+iris = load_iris()
+# Keep only the first two classes: setosa and versicolor
+mask = iris.target < 2
+X, y = iris.data[mask], iris.target[mask]
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.25, random_state=42, stratify=y
+)
+
+model = make_pipeline(StandardScaler(), LogisticRegression())
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+
+print("Accuracy:", accuracy_score(y_test, y_pred))
+print("Confusion matrix:")
+print(confusion_matrix(y_test, y_pred))
+print("Classification report:")
+print(classification_report(y_test, y_pred, target_names=iris.target_names[:2]))`},
+{title:"K-Nearest Neighbours (KNN) & Distance Metrics",short:"KNN classification",desc:"Train a KNN classifier and compare Euclidean, Manhattan and Minkowski distance metrics.",note:"Features are scaled because KNN is distance-based. The example prints the accuracy for each metric.",code:`from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.pipeline import make_pipeline
+from sklearn.metrics import accuracy_score
+
+iris = load_iris()
+X_train, X_test, y_train, y_test = train_test_split(
+    iris.data, iris.target, test_size=0.25,
+    random_state=42, stratify=iris.target
+)
+
+for metric in ["euclidean", "manhattan", "minkowski"]:
+    model = make_pipeline(
+        StandardScaler(),
+        KNeighborsClassifier(n_neighbors=5, metric=metric, p=2)
+    )
+    model.fit(X_train, y_train)
+    predictions = model.predict(X_test)
+    print(f"{metric.title()} distance accuracy:",
+          round(accuracy_score(y_test, predictions), 3))
+
+# Example prediction using the selected model
+sample = [[5.1, 3.5, 1.4, 0.2]]
+print("Predicted class index:", model.predict(sample)[0])`},
+{title:"Decision Tree: Gini Index & Entropy",short:"Decision tree classification",desc:"Train a decision tree, print accuracy, and inspect the Gini impurity and entropy criteria.",note:"Gini and entropy are alternative criteria used to choose decision-tree splits. This example trains and evaluates both.",code:`from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier, export_text
+from sklearn.metrics import accuracy_score
+
+iris = load_iris()
+X_train, X_test, y_train, y_test = train_test_split(
+    iris.data, iris.target, test_size=0.25,
+    random_state=42, stratify=iris.target
+)
+
+for criterion in ["gini", "entropy"]:
+    tree = DecisionTreeClassifier(
+        criterion=criterion, max_depth=3, random_state=42
+    )
+    tree.fit(X_train, y_train)
+    predictions = tree.predict(X_test)
+    print(f"\\nCriterion: {criterion}")
+    print("Accuracy:", round(accuracy_score(y_test, predictions), 3))
+    print(export_text(tree, feature_names=list(iris.feature_names)))`},
+{title:"K-Means Clustering with Elbow Method",short:"Unsupervised clustering",desc:"Fit K-Means for several cluster counts and plot inertia to help select k using the elbow method.",note:"Look for the point where the inertia curve begins to flatten. The elbow is a guide, not a guaranteed unique answer.",code:`import matplotlib.pyplot as plt
+from sklearn.datasets import load_iris
+from sklearn.preprocessing import StandardScaler
+from sklearn.cluster import KMeans
+
+iris = load_iris()
+X = StandardScaler().fit_transform(iris.data)
+
+k_values = range(1, 11)
+inertias = []
+
+for k in k_values:
+    model = KMeans(n_clusters=k, random_state=42, n_init=10)
+    model.fit(X)
+    inertias.append(model.inertia_)
+
+plt.plot(list(k_values), inertias, marker="o")
+plt.xlabel("Number of clusters (k)")
+plt.ylabel("Inertia (within-cluster sum of squares)")
+plt.title("Elbow Method for K-Means")
+plt.xticks(list(k_values))
+plt.grid(True)
+plt.show()
+
+# Example model with k=3
+final_model = KMeans(n_clusters=3, random_state=42, n_init=10)
+labels = final_model.fit_predict(X)
+print("First 10 cluster labels:", labels[:10])`},
+{title:"PCA: Dimensionality Reduction & Explained Variance",short:"Principal Component Analysis",desc:"Standardize the Iris dataset, apply PCA, and display the explained variance ratio and cumulative variance.",note:"Standardization is important when features have different scales. PCA is unsupervised and does not use class labels to find components.",code:`import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.datasets import load_iris
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
+
+iris = load_iris()
+X = StandardScaler().fit_transform(iris.data)
+
+pca = PCA()
+X_pca = pca.fit_transform(X)
+
+ratios = pca.explained_variance_ratio_
+cumulative = np.cumsum(ratios)
+
+print("Explained variance ratio:", np.round(ratios, 4))
+print("Cumulative explained variance:", np.round(cumulative, 4))
+
+plt.figure(figsize=(7, 4))
+plt.bar(range(1, len(ratios) + 1), ratios, label="Individual variance")
+plt.plot(range(1, len(cumulative) + 1), cumulative,
+         marker="o", label="Cumulative variance")
+plt.xlabel("Principal component")
+plt.ylabel("Explained variance ratio")
+plt.title("PCA Explained Variance")
+plt.xticks(range(1, len(ratios) + 1))
+plt.legend()
+plt.grid(True)
+plt.show()
+
+# Keep the smallest number of components reaching 95% variance
+n_components = np.argmax(cumulative >= 0.95) + 1
+print("Components needed for at least 95% variance:", n_components)
+X_reduced = PCA(n_components=n_components).fit_transform(X)
+print("Reduced data shape:", X_reduced.shape)`},
+{title:"Model Validation: Train-Test Split, Cross-Validation, ROC & AUC",short:"Model evaluation techniques",desc:"Evaluate a binary classifier with a holdout set, stratified cross-validation, ROC curve and AUC score.",note:"ROC/AUC requires a binary target here. Keep the test set separate from model selection to avoid optimistic evaluation.",code:`import matplotlib.pyplot as plt
+from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split, StratifiedKFold, cross_val_score
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import (
+    accuracy_score, roc_curve, roc_auc_score, classification_report
+)
+
+data = load_breast_cancer()
+X, y = data.data, data.target
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.25, random_state=42, stratify=y
+)
+
+model = make_pipeline(StandardScaler(), LogisticRegression(max_iter=5000))
+model.fit(X_train, y_train)
+
+predictions = model.predict(X_test)
+probabilities = model.predict_proba(X_test)[:, 1]
+
+print("Test accuracy:", round(accuracy_score(y_test, predictions), 4))
+print("Test ROC-AUC:", round(roc_auc_score(y_test, probabilities), 4))
+print(classification_report(y_test, predictions, target_names=data.target_names))
+
+cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+cv_scores = cross_val_score(model, X_train, y_train, cv=cv, scoring="accuracy")
+print("5-fold CV accuracy scores:", cv_scores.round(4))
+print("Mean CV accuracy:", round(cv_scores.mean(), 4))
+
+fpr, tpr, thresholds = roc_curve(y_test, probabilities)
+plt.plot(fpr, tpr, label=f"AUC = {roc_auc_score(y_test, probabilities):.3f}")
+plt.plot([0, 1], [0, 1], linestyle="--")
+plt.xlabel("False Positive Rate")
+plt.ylabel("True Positive Rate")
+plt.title("ROC Curve")
+plt.legend()
+plt.grid(True)
+plt.show()`}
+];
+
+const librariesByExperiment = [
+  ["Python built-in modules", "NumPy", "pandas", "Matplotlib", "scikit-learn"],
+  ["Python built-in modules only — no installation needed"],
+  ["Python built-in modules only — no installation needed"],
+  ["NumPy", "scikit-learn"],
+  ["scikit-learn"],
+  ["scikit-learn"],
+  ["scikit-learn"],
+  ["Matplotlib", "scikit-learn"],
+  ["NumPy", "Matplotlib", "scikit-learn"],
+  ["Matplotlib", "scikit-learn"]
+];
+const nav = document.getElementById("navlist");
+const title = document.getElementById("title");
+const desc = document.getElementById("desc");
+const note = document.getElementById("note");
+const code = document.getElementById("code");
+let active = 0;
+function show(index) {
+  active = index;
+  const exp = experiments[index];
+  title.textContent = `${index + 1}. ${exp.title}`;
+  desc.textContent = exp.desc;
+  note.textContent = exp.note;
+  code.textContent = exp.code;
+  const libs = librariesByExperiment[index];
+  const libBox = document.getElementById("current-libraries");
+  libBox.innerHTML = "";
+  const ul = document.createElement("ul");
+  libs.forEach(lib => { const li = document.createElement("li"); li.textContent = lib; ul.appendChild(li); });
+  libBox.appendChild(ul);
+  if (index === 1 || index === 2) {
+    const p = document.createElement("p"); p.textContent = "This experiment uses only Python's built-in features; no pip install is required."; libBox.appendChild(p);
+  } else {
+    const p = document.createElement("p"); p.textContent = "If needed, install the common set using the command below."; libBox.appendChild(p);
+  }
+  document.querySelectorAll(".exp-link").forEach((el, i) => {
+    el.classList.toggle("active", i === index);
+    el.setAttribute("aria-current", i === index ? "page" : "false");
+  });
+}
+experiments.forEach((exp, i) => {
+  const button = document.createElement("button");
+  button.className = "exp-link";
+  button.innerHTML = `${i + 1}. ${exp.title}<small>${exp.short}</small>`;
+  button.addEventListener("click", () => show(i));
+  nav.appendChild(button);
+});
+// Clipboard API may be blocked when this page is opened directly as a local file.
+// Use a temporary textarea + execCommand as a fallback for local-file and older-browser use.
+async function copyTextToClipboard(text) {
+  if (navigator.clipboard && window.isSecureContext) {
+    try { await navigator.clipboard.writeText(text); return true; } catch (e) { /* use fallback */ }
+  }
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  textarea.setAttribute("readonly", "");
+  textarea.style.position = "fixed";
+  textarea.style.left = "-9999px";
+  textarea.style.top = "0";
+  document.body.appendChild(textarea);
+  textarea.focus();
+  textarea.select();
+  textarea.setSelectionRange(0, textarea.value.length);
+  let copied = false;
+  try { copied = document.execCommand("copy"); } catch (e) { copied = false; }
+  document.body.removeChild(textarea);
+  return copied;
+}
+function showCopyResult(button, success, defaultText) {
+  button.textContent = success ? "Copied!" : "Copy failed — select text manually";
+  setTimeout(() => button.textContent = defaultText, 2200);
+}
+document.getElementById("copy").addEventListener("click", async () => {
+  const btn = document.getElementById("copy");
+  const success = await copyTextToClipboard(experiments[active].code);
+  showCopyResult(btn, success, "Copy code");
+  if (!success) {
+    const range = document.createRange();
+    range.selectNodeContents(code);
+    const selection = window.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
+  }
+});
+document.getElementById("copy-install").addEventListener("click", async () => {
+  const btn = document.getElementById("copy-install");
+  const success = await copyTextToClipboard("python -m pip install numpy pandas matplotlib scikit-learn");
+  showCopyResult(btn, success, "Copy PC install command");
+  if (!success) {
+    const command = document.getElementById("install-command");
+    const range = document.createRange(); range.selectNodeContents(command);
+    const selection = window.getSelection(); selection.removeAllRanges(); selection.addRange(range);
+  }
+});
+document.getElementById("download").addEventListener("click", () => {
+  const exp = experiments[active];
+  const blob = new Blob([exp.code + "\n"], {type:"text/x-python;charset=utf-8"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `${String(active + 1).padStart(2, "0")}_${exp.title.toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_|_$/g, "")}.py`;
+  a.click();
+  URL.revokeObjectURL(url);
+});
+show(0);
+</script>
+</body>
+</html>
